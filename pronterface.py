@@ -418,6 +418,8 @@ class PronterWindow(MainWindow, pronsole.pronsole):
         self.sentlines.put_nowait(line)
 
     def is_excluded_move(self, gline):
+        """Check whether the given moves ends at a position specified as
+        excluded in the part excluder"""
         if not gline.is_move or not self.excluder or not self.excluder.rectangles:
             return False
         for (x0, y0, x1, y1) in self.excluder.rectangles:
@@ -426,38 +428,40 @@ class PronterWindow(MainWindow, pronsole.pronsole):
         return False
 
     def preprintsendcb(self, gline, next_gline):
+        """Callback when a printer gcode is about to be sent. We use it to
+        exclude moves defined by the part excluder tool"""
         if not self.is_excluded_move(gline):
             return gline
         else:
-            if gline.z != None:
+            if gline.z is not None:
                 if gline.relative:
-                    if self.excluder_z_abs != None:
+                    if self.excluder_z_abs is not None:
                         self.excluder_z_abs += gline.z
-                    elif self.excluder_z_rel != None:
+                    elif self.excluder_z_rel is not None:
                         self.excluder_z_rel += gline.z
                     else:
                         self.excluder_z_rel = gline.z
                 else:
                     self.excluder_z_rel = None
                     self.excluder_z_abs = gline.z
-            if gline.e != None and not gline.relative_e:
+            if gline.e is not None and not gline.relative_e:
                 self.excluder_e = gline.e
             # If next move won't be excluded, push the changes we have to do
-            if next_gline != None and not self.is_excluded_move(next_gline):
-                if self.excluder_e != None:
+            if next_gline is not None and not self.is_excluded_move(next_gline):
+                if self.excluder_e is not None:
                     self.p.send_now("G92 E%.5f" % self.excluder_e)
                     self.excluder_e = None
-                if self.excluder_z_abs != None:
+                if self.excluder_z_abs is not None:
                     if gline.relative:
                         self.p.send_now("G90")
-                    self.p.send_now("G1 Z.5f" % self.excluder_z_abs)
+                    self.p.send_now("G1 Z%.5f" % self.excluder_z_abs)
                     self.excluder_z_abs = None
                     if gline.relative:
                         self.p.send_now("G91")
-                if self.excluder_z_rel != None:
+                if self.excluder_z_rel is not None:
                     if not gline.relative:
                         self.p.send_now("G91")
-                    self.p.send_now("G1 Z.5f" % self.excluder_z_rel)
+                    self.p.send_now("G1 Z%.5f" % self.excluder_z_rel)
                     self.excluder_z_rel = None
                     if not gline.relative:
                         self.p.send_now("G90")
@@ -604,7 +608,7 @@ class PronterWindow(MainWindow, pronsole.pronsole):
             return 
         if not self.excluder:
             self.excluder = Excluder()
-        self.excluder.pop_window(self.fgcode, bgcolor = self.settings.bgcolor)
+        self.excluder.pop_window(self.fgcode, bgcolor = self.settings.bgcolor, build_dimensions = self.build_dimensions_list)
 
     def popmenu(self):
         self.menustrip = wx.MenuBar()

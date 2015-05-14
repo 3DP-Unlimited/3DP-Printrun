@@ -378,8 +378,9 @@ class Gviz(wx.Panel):
         if self.paint_overlay:
             self.paint_overlay(dc)
 
-    def addfile(self, gcode):
+    def addfile(self, gcode, showall = False):
         self.clear()
+        self.showall = showall
         self.add_parsed_gcodes(gcode)
         max_layers = len(self.layers)
         if hasattr(self.parent, "layerslider"):
