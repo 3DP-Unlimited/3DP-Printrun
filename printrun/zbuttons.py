@@ -25,7 +25,7 @@ def sign(n):
 class ZButtons(BufferedCanvas):
     #    button_ydistances = [7, 30, 55, 83] # ,112
     #    center = (30, 118)
-    scale= 1.693
+    scale= 1.000
     button_ydistances = [7*scale, 30*scale, 55*scale, 83*scale] # ,112
     center = (30*scale, 118*scale)
     label_overlay_positions = {
@@ -52,8 +52,8 @@ class ZButtons(BufferedCanvas):
         self.bgcolor.SetFromName(bgcolor)
         self.bgcolormask = wx.Colour(self.bgcolor.Red(), self.bgcolor.Green(), self.bgcolor.Blue(), 128)
 
-        #BufferedCanvas.__init__(self, parent, ID, size=wx.Size(59, 244))
-        BufferedCanvas.__init__(self, parent, ID, size=wx.Size(100, 413))
+        BufferedCanvas.__init__(self, parent, ID, size=wx.Size(59, 244))
+        #BufferedCanvas.__init__(self, parent, ID, size=wx.Size(100, 413))
 
         # Set up mouse and keyboard event capture
         self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
