@@ -150,7 +150,7 @@ class KeyboardSizer(wx.GridBagSizer):
 
 
     def make_button(self, label):
-        button = wx.Button(self.parentpanel, -1, label, style=0, size = (50,50))
+        button = wx.Button(self.parentpanel, -1, label, style=0, size = (44,47))
         button.Bind(wx.EVT_BUTTON, self.btn_press)
         return button
 
