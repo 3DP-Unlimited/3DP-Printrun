@@ -569,6 +569,21 @@ class PronterWindow(MainWindow, pronsole.pronsole):
         except Exception, x:
             print _("You must enter a temperature. (%s)") % (repr(x),)
 
+    def do_setspeed(self, l = ""):
+        try:
+            if l.__class__ not in (str, unicode) or not len(l):
+                l = str(self.speed_slider.GetValue())
+            else:
+                l = l.lower()
+            speed = int(l)
+            if self.p.online:
+                self.p.send_now("M220 S" + l)
+                self.log(_("Setting print speed factor to %d%%.") % speed)
+            else:
+                self.logError(_("Printer is not online."))
+        except Exception, x:
+            self.logError(_("You must enter a speed. (%s)") % (repr(x),))
+
     def end_macro(self):
         pronsole.pronsole.end_macro(self)
         self.update_macros_menu()

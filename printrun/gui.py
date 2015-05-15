@@ -31,6 +31,7 @@ from printrun.graph import Graph
 from printrun.pronterface_widgets import TempGauge
 from printrun_utils import imagefile
 from operator import or_
+from wx.lib.agw.floatspin import FloatSpin
 
 def make_button(parent, label, callback, tooltip, container = None, size = wx.DefaultSize, style = 0):
     button = wx.Button(parent, -1, label, style = style, size = size)
@@ -245,6 +246,40 @@ def add_extra_controls(self, root, parentpanel, extra_buttons = None):
         root.btemp.SetValue(root.btemp.Value + ' (user)')
     if( '(' not in root.htemp.Value):
         root.htemp.SetValue(root.htemp.Value + ' (user)')
+
+    # Speed control #
+    speedpanel = root.newPanel(parentpanel)
+    speedsizer = wx.BoxSizer(wx.HORIZONTAL)
+    speedsizer.Add(wx.StaticText(speedpanel, -1, _("Print speed:")), flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+
+    root.speed_slider = wx.Slider(speedpanel, -1, 100, 1, 300)
+    speedsizer.Add(root.speed_slider, 1, flag = wx.EXPAND)
+
+    root.speed_spin = FloatSpin(speedpanel, -1, value = 100, min_val = 1, max_val = 300, digits = 0, style = wx.ALIGN_LEFT, size = (80, -1))
+    speedsizer.Add(root.speed_spin, 0, flag = wx.ALIGN_CENTER_VERTICAL)
+    root.speed_label = wx.StaticText(speedpanel, -1, _("%"))
+    speedsizer.Add(root.speed_label, flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+
+    def speedslider_set(event):
+        root.do_setspeed()
+        root.speed_setbtn.SetBackgroundColour(wx.NullColour)
+    root.speed_setbtn = make_button(speedpanel, _("Set"), speedslider_set, _("Set print speed factor"), size = (38, -1), style = wx.BU_EXACTFIT)
+    root.printerControls.append(root.speed_setbtn)
+    speedsizer.Add(root.speed_setbtn, flag = wx.ALIGN_CENTER)
+    speedpanel.SetSizer(speedsizer)
+    self.Add(speedpanel, pos = (base_line + 8, 0), span = (1, 7), flag = wx.EXPAND)
+
+    def speedslider_spin(event):
+        value = root.speed_spin.GetValue()
+        root.speed_setbtn.SetBackgroundColour("red")
+        root.speed_slider.SetValue(value)
+    root.speed_spin.Bind(wx.EVT_SPINCTRL, speedslider_spin)
+
+    def speedslider_scroll(event):
+        value = root.speed_slider.GetValue()
+        root.speed_setbtn.SetBackgroundColour("red")
+        root.speed_spin.SetValue(value)
+    root.speed_slider.Bind(wx.EVT_SCROLL, speedslider_scroll)
 
     root.tempdisp = wx.StaticText(parentpanel,-1, "")
 
