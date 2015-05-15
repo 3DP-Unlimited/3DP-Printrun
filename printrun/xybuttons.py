@@ -37,7 +37,7 @@ class XYButtons(BufferedCanvas):
         2: (179, 65, 15),
         3: (201, 42, 16)
     }
-    concentric_circle_radii = [11, 45, 69, 94, 115]
+    concentric_circle_radii = [11, 45, 69, 94, 131]
     center = (124, 121)
     spacer = 7
 
@@ -181,6 +181,9 @@ class XYButtons(BufferedCanvas):
 
         r1 = XYButtons.concentric_circle_radii[concentric]
         r2 = XYButtons.concentric_circle_radii[concentric+1]
+
+        if(r2 == XYButtons.concentric_circle_radii[4]):
+          r2 = 115
 
         self.drawPartialPie(gc, center, r1-inner_ring_radius, r2-inner_ring_radius, a1+fudge, a2-fudge)
 
