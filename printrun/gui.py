@@ -151,7 +151,7 @@ class KeyboardSizer(wx.GridBagSizer):
 
 
     def make_button(self, label):
-        button = wx.Button(self.parentpanel, -1, label, style=0, size = (50,50))
+        button = wx.Button(self.parentpanel, -1, label, style=0, size = (44,50))
         button.Bind(wx.EVT_BUTTON, self.btn_press)
         return button
 
@@ -492,7 +492,7 @@ class LogPane(wx.BoxSizer):
         root.commandbox.histindex = 1
         #root.printerControls.append(root.commandbox)
         lbrs.Add(root.commandbox, 1)
-        root.sendbtn = make_button(parentpanel, _("Send"), root.sendline, _("Send Command to Printer"), size = [70,60], style = wx.BU_EXACTFIT, container = lbrs)
+        root.sendbtn = make_button(parentpanel, _("Send"), root.sendline, _("Send Command to Printer"), size = [70,38], style = wx.BU_EXACTFIT, container = lbrs)
         #root.printerControls.append(root.sendbtn)
         self.Add(lbrs, 0, wx.EXPAND)
 
