@@ -492,7 +492,7 @@ class LogPane(wx.BoxSizer):
         root.commandbox.histindex = 1
         #root.printerControls.append(root.commandbox)
         lbrs.Add(root.commandbox, 1)
-        root.sendbtn = make_button(parentpanel, _("Send"), root.sendline, _("Send Command to Printer"), size = [70,38], style = wx.BU_EXACTFIT, container = lbrs)
+        root.sendbtn = make_button(parentpanel, _("Send"), root.sendline, _("Send Command to Printer"), size = [70,36], style = wx.BU_EXACTFIT, container = lbrs)
         #root.printerControls.append(root.sendbtn)
         self.Add(lbrs, 0, wx.EXPAND)
 
