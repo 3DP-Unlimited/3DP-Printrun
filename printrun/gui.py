@@ -292,6 +292,40 @@ def add_extra_controls(self, root, parentpanel, extra_buttons = None):
         root.speed_spin.SetValue(value)
     root.speed_slider.Bind(wx.EVT_SCROLL, speedslider_scroll)
 
+    # Extrude control #
+    extrudepanel = root.newPanel(parentpanel)
+    extrudesizer = wx.BoxSizer(wx.HORIZONTAL)
+    extrudesizer.Add(wx.StaticText(extrudepanel, -1, _("Print extrude:")), flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+
+    root.extrude_slider = wx.Slider(extrudepanel, -1, 100, 1, 300)
+    extrudesizer.Add(root.extrude_slider, 1, flag = wx.EXPAND)
+
+    root.extrude_spin = FloatSpin(extrudepanel, -1, value = 100, min_val = 1, max_val = 300, digits = 0, style = wx.ALIGN_LEFT, size = (80, -1))
+    extrudesizer.Add(root.extrude_spin, 0, flag = wx.ALIGN_CENTER_VERTICAL)
+    root.extrude_label = wx.StaticText(extrudepanel, -1, _("%"))
+    extrudesizer.Add(root.extrude_label, flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+
+    def extrudeslider_set(event):
+        root.do_setextrude()
+        root.extrude_setbtn.SetBackgroundColour(wx.NullColour)
+    root.extrude_setbtn = make_button(extrudepanel, _("Set"), extrudeslider_set, _("Set print extrude factor"), size = (38, -1), style = wx.BU_EXACTFIT)
+    root.printerControls.append(root.extrude_setbtn)
+    extrudesizer.Add(root.extrude_setbtn, flag = wx.ALIGN_CENTER)
+    extrudepanel.SetSizer(extrudesizer)
+    self.Add(extrudepanel, pos = (base_line + 9, 0), span = (1, 7), flag = wx.EXPAND)
+
+    def extrudeslider_spin(event):
+        value = root.extrude_spin.GetValue()
+        root.extrude_setbtn.SetBackgroundColour("red")
+        root.extrude_slider.SetValue(value)
+    root.extrude_spin.Bind(wx.EVT_SPINCTRL, extrudeslider_spin)
+
+    def extrudeslider_scroll(event):
+        value = root.extrude_slider.GetValue()
+        root.extrude_setbtn.SetBackgroundColour("red")
+        root.extrude_spin.SetValue(value)
+    root.extrude_slider.Bind(wx.EVT_SCROLL, extrudeslider_scroll)
+
     root.tempdisp = wx.StaticText(parentpanel,-1, "")
 
     if not extra_buttons:
