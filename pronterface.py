@@ -587,7 +587,7 @@ class PronterWindow(MainWindow, pronsole.pronsole):
     def do_setextrude(self, l = ""):
         try:
             if l.__class__ not in (str, unicode) or not len(l):
-                l = str(self.speed_slider.GetValue())
+                l = str(self.extrude_slider.GetValue())
             else:
                 l = l.lower()
             speed = int(l)

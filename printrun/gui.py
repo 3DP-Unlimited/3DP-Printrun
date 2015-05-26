@@ -157,6 +157,7 @@ class KeyboardSizer(wx.GridBagSizer):
         self.Add(self.N9btn, pos=(0,10))
         self.Minusbtn = self.make_button("-")
         self.Add(self.Minusbtn, pos=(0,0))
+        self.Minusbtn.SetForegroundColour('#E60000');
 #        self.Atbtn = self.make_button("@")
 #        self.Add(self.Atbtn, pos=(2,10))
 
