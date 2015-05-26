@@ -592,7 +592,7 @@ class PronterWindow(MainWindow, pronsole.pronsole):
                 l = l.lower()
             speed = int(l)
             if self.p.online:
-                self.p.send_now("M220 S" + l)
+                self.p.send_now("M221 S" + l)
                 self.log(_("Setting print extrude factor to %d%%.") % speed)
             else:
                 self.logError(_("Printer is not online."))
