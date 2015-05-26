@@ -278,7 +278,7 @@ def add_extra_controls(self, root, parentpanel, extra_buttons = None):
     root.printerControls.append(root.speed_setbtn)
     speedsizer.Add(root.speed_setbtn, flag = wx.ALIGN_CENTER)
     speedpanel.SetSizer(speedsizer)
-    self.Add(speedpanel, pos = (base_line + 8, 0), span = (1, 7), flag = wx.EXPAND)
+    self.Add(speedpanel, pos = (base_line + 6, 0), span = (1, 7), flag = wx.EXPAND)
 
     def speedslider_spin(event):
         value = root.speed_spin.GetValue()
@@ -312,7 +312,7 @@ def add_extra_controls(self, root, parentpanel, extra_buttons = None):
     root.printerControls.append(root.extrude_setbtn)
     extrudesizer.Add(root.extrude_setbtn, flag = wx.ALIGN_CENTER)
     extrudepanel.SetSizer(extrudesizer)
-    self.Add(extrudepanel, pos = (base_line + 9, 0), span = (1, 7), flag = wx.EXPAND)
+    self.Add(extrudepanel, pos = (base_line + 7, 0), span = (1, 7), flag = wx.EXPAND)
 
     def extrudeslider_spin(event):
         value = root.extrude_spin.GetValue()
